@@ -20,7 +20,7 @@ if DEPLOY_FOR == 'fcgi'
 namespace :deploy do
 
   task :start, :roles => :app do
-    run "cd #{current_path} && chmod 755 #{chmod755}"
+    run "cd #{current_path} && chmod -R 755 ."
   	run "rm -rf /home/#{user}/public_html/#{application};ln -s #{current_path}/public /home/#{user}/public_html/#{application}"
   end
 
@@ -91,25 +91,26 @@ end
 # Cap Notes: current_path, shared_path, release_path
 
 namespace :deploy do
-	task :after, :roles => :app do
+	task :make_online, :roles => :app do
 
     if DEPLOY_FOR == 'fcgi'
       # for cgi server only
-      run "cd #{release_path}/public && cp -f dispatch.rb.online dispatch.rb"
-      run "cd #{release_path}/public && cp -f dispatch.cgi.online dispatch.cgi"
+      run "cd #{release_path}/public && cp -f dispatch.rb.online   dispatch.rb"
+      run "cd #{release_path}/public && cp -f dispatch.cgi.online  dispatch.cgi"
       run "cd #{release_path}/public && cp -f dispatch.fcgi.online dispatch.fcgi"
-
-      run "cd #{release_path}/config && cp -f environment.rb.online environment.rb"
-      run "cd #{release_path}/config/environments && cp -f production.rb.online production.rb"
+      run "cd #{release_path}/public && cp -f online.htaccess      .htaccess"
+      
     end
     
     # config on server
     run "cd #{release_path}/config              && cp -f database.yml.online database.yml"
+    run "cd #{release_path}/config              && cp -f environment.rb.online environment.rb"
     run "cd #{release_path}/config/environments && cp -f production.rb.online production.rb"
     run "cd #{release_path}/config/environments && cp -f test.rb.online test.rb"
     run "cd #{release_path}/config/environments && cp -f cucumber.rb.online cucumber.rb"
     
     if DATABASE == 'sqlite3'
+      # NOTE: or, can change this to a different shared dir if also set in database.yml
       run "cd #{release_path}/db && ln -s #{shared_path}/db/production.sqlite3"
     end
 
@@ -125,4 +126,4 @@ namespace :deploy do
   end
 end
 
-after "deploy:finalize_update", "deploy:after"
+after "deploy:finalize_update", "deploy:make_online"
