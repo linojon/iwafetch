@@ -123,6 +123,9 @@ namespace :deploy do
         
     # # symlink shared file uploads (images, downloads, attachments)
     # run "cd #{release_path} && ln -s #{shared_path}/system/files #{release_path}/files"
+  
+    run "cd #{current_path} && chmod -R 755 ."
+  
   end
 end
 
