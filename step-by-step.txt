@@ -115,10 +115,18 @@ Startup Server whenever mac reboots
       
   click System Preferences – Accounts – Login Items, then Add... 
 
-
- 
- 
 =================== 
 #require 'open-uri' ; open("http://google.com") { |response| puts response.read }
   
-  
+---------------------------------
+deploy on hostingrails using git and capistrano
+
+	
+	
+in subfolder
+	.htaccess
+			RewriteBase /iwafetch 
+			
+	add to environment.rb
+		ActionController::AbstractRequest.relative_url_root = "/iwafetch"
+		
