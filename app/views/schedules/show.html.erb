@@ -1,0 +1,24 @@
+<h2>Scheduled Item</h2>
+<p>
+  <b>Service:</b>
+  <%= NEWS_SERVICES.find {|k,v| v==@schedule.service}.first %>
+</p>
+
+<p>
+  <b>Terms:</b>
+  <%=h @schedule.terms %>
+</p>
+
+<p>
+  <b>Frequency:</b>
+  <%=h @schedule.frequency %>
+</p>
+
+<p>
+  <b>Last run at:</b>
+  <%=h @schedule.last_run_at.to_s(:short) if @schedule.last_run_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_schedule_path(@schedule) %> |
+<%= link_to 'List', schedules_path %>

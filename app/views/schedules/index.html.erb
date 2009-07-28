@@ -1,0 +1,35 @@
+<h1>Listing schedules</h1>
+
+<table>
+  <tr>
+    <th>Service</th>
+    <th>Terms</th>
+    <!-- <th>Frequency</th> -->
+    <th>Last run at</th>
+  </tr>
+
+<% for schedule in @schedules %>
+  <tr>
+    <td><%=h news_service_name schedule.service %></td>
+    <td><%=h schedule.terms %></td>
+    <!-- <td><%=h schedule.frequency %></td> -->
+    <td><% if schedule.last_run_at %>
+      <%= link_to schedule.last_run_at.to_s(:short), 
+                  search_path(Search.find_by_service_and_terms_and_created_at(schedule.service, schedule.terms, schedule.last_run_at)) %>
+        <% end %>
+    </td>
+    <td><%= link_to 'Show', schedule %></td>
+    <td><%= link_to 'Edit', edit_schedule_path(schedule) %></td>
+    <td><%= link_to 'Destroy', schedule, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'RUN NOW', run_schedule_path(schedule) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<p>
+<%= link_to 'New schedule', new_schedule_path %>
+</p>
+<p>
+<%= link_to 'Run all now!', run_all_schedules_path %>
+</p>

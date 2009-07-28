@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  service: MyString
+  terms: MyString
+  frequency: 1
+  last_run_at: 2007-11-05 09:57:11
+  created_at: 2007-11-05 09:57:11
+  updated_at: 2007-11-05 09:57:11
+two:
+  id: 2
+  service: MyString
+  terms: MyString
+  frequency: 1
+  last_run_at: 2007-11-05 09:57:11
+  created_at: 2007-11-05 09:57:11
+  updated_at: 2007-11-05 09:57:11

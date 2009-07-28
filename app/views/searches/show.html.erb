@@ -1,0 +1,30 @@
+<h2>
+  <%= news_service_name @search.service %>
+  :
+  <%=h @search.terms %>
+</h2>
+<h3>
+  <%= @search.created_at.to_s :long %>
+</h3>
+
+<% if @search.done %>
+<p style="color:red">
+  Done
+</p>
+<% end %>
+
+<p>
+<%= link_to 'Delete', @search, :confirm => 'Are you sure?', :method => :delete %> |
+<%= link_to 'Done', edit_search_path(@search) %> |
+<%= link_to 'List', searches_path %>
+</p>
+
+<div style="padding:1em" id="results">
+  <%= @search.body %>
+</div>
+
+<p>
+<%= link_to 'Delete', @search, :confirm => 'Are you sure?', :method => :delete %> |
+<%= link_to 'Done', edit_search_path(@search) %> |
+<%= link_to 'List', searches_path %>
+</p>

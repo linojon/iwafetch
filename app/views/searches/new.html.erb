@@ -1,0 +1,21 @@
+<h1>New search</h1>
+
+<%= error_messages_for :search %>
+
+<% form_for(@search) do |f| %>
+  <p>
+    <b>Service</b><br />
+    <%= f.select :service, NEWS_SERVICES %>
+  </p>
+
+  <p>
+    <b>Terms</b><br />
+    <%= f.text_field :terms %>
+  </p>
+
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', searches_path %>

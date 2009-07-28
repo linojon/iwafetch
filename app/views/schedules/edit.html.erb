@@ -1,0 +1,26 @@
+<h1>Editing schedule</h1>
+
+<%= error_messages_for :schedule %>
+
+<% form_for(@schedule) do |f| %>
+  <p>
+    <b>Service</b><br />
+    <%= f.select :service, NEWS_SERVICES %>
+  </p>
+
+  <p>
+    <b>Terms</b><br />
+    <%= f.text_field :terms %>
+  </p>
+
+  <!-- <p>
+    <b>Frequency</b><br />
+    <%= f.text_field :frequency %>
+  </p> -->
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'List', schedules_path %>

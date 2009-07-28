@@ -1,0 +1,124 @@
+-------------------------------
+  $ ./rails-svn.sh iwafetch
+  $ cd iwafetch
+  $ rake rails:freeze:edge TAG=rel_2-0-0_PR
+  
+  $ script/generate scaffold search service:string terms:string body:text page:integer done:boolean 
+  $ script/generate scaffold schedule service:string terms:string frequency:integer last_run_at:datetime 
+  
+  edit database.yml
+  edit routes.rb
+      map.connect '', :controller => "search"
+      map.resources :schedules, 
+        :member => { :run => :get },
+        :collection => { :run_all => :get }
+      
+      
+  $ rake db:migrate
+  
+  edit environment.rb (inside)
+      config.action_controller.session = { :session_key => "_myapp_session", :secret => "Parker Hill Farm" }
+    and (outside)
+      if ENV['RAILS_ENV'] != 'production'
+        require "ruby-debug"
+        Debugger.start
+      end 
+      
+      
+  $ sudo gem install mechanize
+  $ sudo gem install hpricot
+  $ sudo gem install parsetree ruby2ruby 
+  $ sudo gem install scrubyt 
+  NOTE: decided not to use scrubyt, just hpricot
+  
+-------------------------------
+environment.rb
+      NEWS_SERVICES = {
+        "Google News" => 'google_news'
+      }
+      
+application_helper.rb
+      def news_service_name(service)
+        NEWS_SERVICES.find {|k,v| v==service}.first
+      end
+      
+schedules_controller.rb
+      def run_all
+        Schedule.run_all
+        redirect_to(schedules_url)
+      end
+
+      def run
+        @schedule = Schedule.find(params[:id])
+        if @schedule && @schedule.run
+          flash[:notice] = 'Search run successful'
+        else
+          flash[:notice] = 'Search run failed'
+        end
+        redirect_to(schedules_url)
+      end
+      
+models/search.rb
+      require "hpricot"
+      require 'open-uri'
+
+      def fetch
+        #debugger
+        case self.service
+        when "google_news" :
+          q = self.terms.gsub('"','%22').gsub("'", '%27').gsub(' ','+')
+          doc = Hpricot(open("http://news.google.com/news?scoring=n&q=#{q}"))
+          self.body = (doc/".mainbody").inner_html
+          self.save
+        end
+      end
+      
+models/schedule.rb
+      def run
+        search = Search.new( :service => self.service, :terms => self.terms)
+        if search
+          search.fetch
+          self.last_run_at = search.updated_at
+          self.save
+        end
+      end
+
+      def self.run_all
+        schedules = self.find(:all)
+        # TODO: filter by frequency, determine which should run
+        schedules.each { |schedule| schedule.run }
+      end
+      
+views...
+
+--------------------------------
+create cron task
+  $ cd ~
+  create file run_iwafetch:
+      #!/bin/bash
+      cd /Users/jonathan/rails/iwafetch
+      /opt/local/bin/ruby script/runner 'Schedule.run_all'
+  NOTE need full paths
+  
+create crontab entry
+    0       *       *       *       *       /Users/jonathan/run_iwafetch
+    (NOTE: I used Cronnix gui)
+  
+ 
+---------------------------------
+Startup Server whenever mac reboots
+
+  create file ~/start_iwafetch
+      #!/bin/bash
+      cd /Users/jonathan/rails/iwafetch
+      /opt/local/bin/ruby script/server --port=3005 --daemon
+      
+  click System Preferences – Accounts – Login Items, then Add... 
+
+
+ 
+ 
+=================== 
+#require 'open-uri' ; open("http://google.com") { |response| puts response.read }
+  
+  

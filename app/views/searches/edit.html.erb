@@ -1,0 +1,27 @@
+<h1>Editing search</h1>
+
+<%= error_messages_for :search %>
+
+<% form_for(@search) do |f| %>
+  <p>
+    <b>Service</b><br />
+    <%= f.select :service, NEWS_SERVICES, {}, :disabled => true %>
+  </p>
+  
+  <p>
+    <b>Terms</b><br />
+    <%= f.text_field :terms, :disabled => true %>
+  </p>
+
+  <p>
+    <b>Done</b><br />
+    <%= f.check_box :done %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @search %> |
+<%= link_to 'Back', searches_path %>

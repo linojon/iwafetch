@@ -1,0 +1,55 @@
+<!-- ref: http://www.shiningstar.net/articles/articles/javascript/checkboxes.asp?ID=AW -->
+<script language="javascript">
+<!--
+function checkAll(field)
+{
+  for (var i = field.length-1; i >= 0; --i) {
+    field[i].checked = true;
+  }
+}
+function unCheckAll(field)
+{
+  for (var i = field.length-1; i >= 0; --i) {
+    field[i].checked = false;
+  }
+}
+// -->
+</script>
+
+<h1>Listing searches</h1>
+
+<% form_tag delete_checked_searches_path, :method => :post, :id => 'list', :name => 'list' do %>
+
+<table id="results">
+  <tr>
+    <th>Service</th>
+    <th>Terms</th>
+    <th>Date</th>
+    <th>Done</th>
+    <th></th>
+    <th></th>
+    <th>
+      <a href="#" onclick="checkAll(document.forms.list.elements['searches[]'])">check all</a><br />
+      <a href="#" onclick="unCheckAll(document.forms.list.elements['searches[]'])">uncheck all</a>
+    </th>
+  </tr>
+
+<% for search in @searches %>
+  <tr>
+    <td><%= news_service_name search.service %>
+    <td><%=h search.terms %></td>
+    <td><%= link_to search.created_at.to_s( :short), search %></td>
+    <td><%=h "done" if search.done %></td>
+    <td><%= link_to 'Edit', edit_search_path(search) %></td>
+    <td><%= link_to 'Delete', search, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= check_box_tag "searches[]", "#{search.id}" %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= submit_tag "Delete checked items" %>
+<% end %>
+
+<br />
+
+<%= link_to 'New search', new_search_path %>
