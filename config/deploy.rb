@@ -2,7 +2,8 @@ set :application, "iwafetch"
 set :domain, "rails.parkerhill.com"
 set :user, "parkerhi"
 
-set :repository,  "/home/#{user}/git/#{application}"
+set :repository,  "#{user}@#{domain}:/home/#{user}/git/#{application}"
+#set :repository,  "/home/#{user}/git/#{application}"
 set :scm, :git
 set :scm_username, user
 set :runner, user

@@ -20,7 +20,6 @@ if DEPLOY_FOR == 'fcgi'
 namespace :deploy do
 
   task :start, :roles => :app do
-    run "cd #{current_path} && chmod -R 755 ."
   	run "rm -rf /home/#{user}/public_html/#{application};ln -s #{current_path}/public /home/#{user}/public_html/#{application}"
   end
 
@@ -123,9 +122,9 @@ namespace :deploy do
         
     # # symlink shared file uploads (images, downloads, attachments)
     # run "cd #{release_path} && ln -s #{shared_path}/system/files #{release_path}/files"
-  
-    run "cd #{current_path} && chmod -R 755 ."
-  
+    
+    run "cd #{release_path} && chmod -R 755 ."
+    
   end
 end
 
