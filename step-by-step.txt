@@ -118,10 +118,21 @@ Startup Server whenever mac reboots
 =================== 
 #require 'open-uri' ; open("http://google.com") { |response| puts response.read }
   
----------------------------------
+========================================
+========================================
 deploy on hostingrails using git and capistrano
-
-	
+	follow instructions in ~/rails/hostingrails/hostingrails setup instructions.txt
+		- setup git repository in hostingrails
+		- clone repos to local
+		- setup capistrano and dispatchers
+		- create config/database.yml.deploy
+		- fcgi environment
+		- initial deploy
+		- current symlink
+		- create empty databases (sqlite3)
+		- add dns record for subdomain
+		- in cpanel, Addon Domains
+		
 	
 in subfolder
 	.htaccess

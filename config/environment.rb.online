@@ -70,4 +70,4 @@ NEWS_SERVICES = {
   "Google News" => 'google_news'
 }
 
-ActionController::AbstractRequest.relative_url_root = "/iwafetch"
+#ActionController::AbstractRequest.relative_url_root = "/iwafetch"
