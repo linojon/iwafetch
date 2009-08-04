@@ -133,11 +133,6 @@ deploy on hostingrails using git and capistrano
 		- add dns record for subdomain
 		- in cpanel, Addon Domains
 		
+add cron job
+	in cpanel "cronjobs"
 	
-in subfolder
-	.htaccess
-			RewriteBase /iwafetch 
-			
-	add to environment.rb
-		ActionController::AbstractRequest.relative_url_root = "/iwafetch"
-		
