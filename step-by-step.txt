@@ -136,3 +136,27 @@ deploy on hostingrails using git and capistrano
 add cron job
 	in cpanel "cronjobs"
 	
+	
+========================================
+5/6/2010 railsplayground
+
+origin was on hostingrails, move it to github
+  create new repro on github, then
+  $ git remote rm origin
+  $ git remote add origin git@github.com:linoj/iwafetch.git
+  
+  $ git push origin master
+  copy Capfile from husage
+  edit config/deploy.rb with relevant values
+  
+  (production uses sqlite database)
+
+  $ cap deploy:setup
+  $ cap deploy
+  % rake db:migrate
+  
+
+++++++++++++++++++++++++++
+TODO
+- upgrade rails (current 1.2.5)
+
