@@ -147,14 +147,20 @@ origin was on hostingrails, move it to github
   
   $ git push origin master
   copy Capfile from husage
-  edit config/deploy.rb with relevant values
+  edit config/deploy.rb with relevant values, including
+    set :database, 'sqlite3'
   
-  (production uses sqlite database)
-
   $ cap deploy:setup
+  
+  % mkdir ~/apps/iwafetch/shared/sqlite
+  
   $ cap deploy
   % rake db:migrate
   
+add cron job, via cpanel cronjobs
+  0  	*  	*  	*  	*  	 /home/parkerhi/iwafetch/run_iwafetch_online.sh
+  
+
 
 ++++++++++++++++++++++++++
 TODO

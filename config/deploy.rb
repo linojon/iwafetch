@@ -23,6 +23,6 @@ set :deploy_for, 'passenger'
 set :public_html, 'shared'
 #set :public_html, 'single'
 
-#set :database, 'sqlite3'
-set :database, 'mysql'
+set :database, 'sqlite3'
+#set :database, 'mysql'
 

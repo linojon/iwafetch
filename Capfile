@@ -42,11 +42,11 @@ namespace :deploy do
 
 	task :make_online, :roles => :app do
     # config on server
-    run "cd #{release_path}/config              && cp -f database.yml.online database.yml"
-    run "cd #{release_path}/config              && cp -f environment.rb.online environment.rb"
-    run "cd #{release_path}/config/environments && cp -f production.rb.online production.rb"
-    run "cd #{release_path}/config/environments && cp -f test.rb.online test.rb"
-    run "cd #{release_path}/config/environments && cp -f cucumber.rb.online cucumber.rb"
+    run "cd #{release_path}/config              && cp -f database.yml.deploy database.yml"
+    run "cd #{release_path}/config              && cp -f environment.rb.deploy environment.rb"
+    run "cd #{release_path}/config/environments && cp -f production.rb.deploy production.rb"
+    run "cd #{release_path}/config/environments && cp -f test.rb.deploy test.rb"
+    run "cd #{release_path}/config/environments && cp -f cucumber.rb.deploy cucumber.rb"
     
     if database == 'sqlite3'
       # NOTE: or, can change this to a different shared dir if also set in database.yml
@@ -54,7 +54,7 @@ namespace :deploy do
     end
 
     # # spec on server
-    # run "cd #{release_path}/spec && cp -f spec.opts.online spec.opts"
+    # run "cd #{release_path}/spec && cp -f spec.opts.deploy spec.opts"
     # run "cd #{release_path} && mkdir private"
     # run "cd #{release_path} && chmod 755 private"
     # #run "cd #{release_path}/private && cp -f #{shared_path}/private.htaccess .htaccess"
@@ -71,7 +71,7 @@ namespace :deploy do
         #   cat "RailsBaseURI /\nPassengerAppRoot #{release_path}" >> .htaccess &&
         #   chmod 644 .htaccess
         # }                  
-        run "cd #{release_path}/public && cp -f online.htaccess .htaccess"
+        run "cd #{release_path}/public && cp -f deploy.htaccess .htaccess"
         run "cd #{release_path}/public && chmod 644 .htaccess"
     end
     
